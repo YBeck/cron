@@ -37,7 +37,6 @@ class jobText implements ShouldQueue
      */
     public function handle()
     {
-         dd("here");
         $nextJob = JobModel::find($this->id); 
         if($nextJob && $nextJob->status !== "completed"){
             if($nextJob->status === "active"){
@@ -48,7 +47,7 @@ class jobText implements ShouldQueue
                 $twilio_number = "+12028518268";
         
                 $client = new Client($account_sid, $auth_token);
-                $message = $client->messages->create(
+                $client->messages->create(
                     "+" . $nextJob->destination ,
                     array(
                         'from' => $twilio_number,
