@@ -37,10 +37,10 @@ class jobText implements ShouldQueue
      */
     public function handle()
     {
+         dd("here");
         $nextJob = JobModel::find($this->id); 
         if($nextJob && $nextJob->status !== "completed"){
             if($nextJob->status === "active"){
-                dd("here");
                 $auth_token = $_ENV["TWILIO_ACCOUNT_SID"];
                 $account_sid  = $_ENV["TWILIO_ACCOUNT_ID"];
         
