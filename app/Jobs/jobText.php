@@ -40,6 +40,7 @@ class jobText implements ShouldQueue
         $nextJob = JobModel::find($this->id); 
         if($nextJob && $nextJob->status !== "completed"){
             if($nextJob->status === "active"){
+                dd("here");
                 $auth_token = $_ENV["TWILIO_ACCOUNT_SID"];
                 $account_sid  = $_ENV["TWILIO_ACCOUNT_ID"];
         
@@ -54,7 +55,6 @@ class jobText implements ShouldQueue
                         'body' =>  $nextJob->message
                     )
         );
-            dd($message->sid);
             }
             event(new JobSubmitted($this->user,$nextJob, false));
         }
