@@ -40,9 +40,6 @@ class jobText implements ShouldQueue
         $nextJob = JobModel::find($this->id); 
         if($nextJob && $nextJob->status !== "completed"){
             if($nextJob->status === "active"){
-                $account_sid = 'AC3d70f383f2f43e894495647ddf291c84';
-            
-                // In production, these should be environment variables. E.g.:
                 $auth_token = $_ENV["TWILIO_ACCOUNT_SID"];
                 $account_sid  = $_ENV["TWILIO_ACCOUNT_ID"];
         
@@ -50,14 +47,14 @@ class jobText implements ShouldQueue
                 $twilio_number = "+12028518268";
         
                 $client = new Client($account_sid, $auth_token);
-                $client->messages->create(
+                $message = $client->messages->create(
                     "+" . $nextJob->destination ,
                     array(
                         'from' => $twilio_number,
                         'body' =>  $nextJob->message
                     )
         );
-        
+            dd($message->sid);
             }
             event(new JobSubmitted($this->user,$nextJob, false));
         }
