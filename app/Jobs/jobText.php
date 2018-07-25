@@ -48,7 +48,7 @@ class JobText implements ShouldQueue
         
                 $client = new Client($account_sid, $auth_token);
                 $client->messages->create(
-                    "+" . $nextJob->destination ,
+                    "+1" . $nextJob->destination ,
                     array(
                         'from' => $twilio_number,
                         'body' =>  $nextJob->message
